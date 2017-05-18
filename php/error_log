@@ -1,0 +1,1 @@
+[02-Apr-2017 10:42:37 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/avprimer/public_html/avpsms/php/db_connection.php on line 12

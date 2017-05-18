@@ -1,0 +1,2 @@
+[02-Apr-2017 07:40:21 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, null given in /home/avprimer/public_html/avpsms/php/ajax/showpreregistered.php on line 124
+[02-Apr-2017 07:44:01 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, null given in /home/avprimer/public_html/avpsms/php/ajax/showpreregistered.php on line 124

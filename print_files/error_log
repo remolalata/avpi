@@ -1,0 +1,1 @@
+[05-Apr-2017 00:33:35 Asia/Manila] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/avprimer/public_html/avpsms/print_files/assessment_form.php on line 6
