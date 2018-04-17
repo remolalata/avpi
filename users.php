@@ -24,7 +24,7 @@ function decrypt ($stringArray, $key = "Your secret salt thingie") {
 }
 
 if($the_user['user_type'] != "admin"){ header("Location: 404.php"); }
-  
+
 if(isset($_POST['addUserHidden'])){
   if ($_FILES["file"]["size"] > 5000000) {
     echo "
@@ -83,7 +83,7 @@ if(isset($_POST['addUserHidden'])){
     echo "
       <script>
         alert('New User Registered.');
-        open('users.php', '_self');     
+        open('users.php', '_self');
       </script>
     ";
   }
@@ -125,7 +125,7 @@ if(isset($_POST['editUserHidden'])){
     mysqli_query($conn, "update users set user_type='$user_type', username='$username', first_name='$first_name', last_name='$last_name', middle_name='$middle_name', suffix_name='$suffix_name', gender='$gender', birthdate='$birthdate', age='$age', contact_number='$contact_number', email_address='$email_address', church='$church', sy='$sy', image_path='$storedFile' where user_id='".$user_id."'") or die(mysqli_error());
     mysqli_query($conn, "insert into logs(name, user_type, action, date, time, ip_address) values('".$the_user['first_name']." ".$the_user['last_name']."', '".$the_user['user_type']."', 'Edit a user', '".date("M-d-Y")."', '".date("h:i A")."', '".$_SERVER['REMOTE_ADDR']."')");
     echo "
-      <script>  
+      <script>
         alert('User Record Updated').
         open('users.php', '_self');
       </script>
@@ -155,7 +155,7 @@ if(isset($_POST['deleteUserHidden'])){
   mysqli_query($conn, "delete from users where user_id='$user_id'") or die(mysqli_error($conn));
   mysqli_query($conn, "insert into logs(name, user_type, action, date, time, ip_address) values('".$the_user['first_name']." ".$the_user['last_name']."', '".$the_user['user_type']."', 'Delete a user', '".date("M-d-Y")."', '".date("h:i A")."', '".$_SERVER['REMOTE_ADDR']."')");
   echo "
-    <script>  
+    <script>
       alert('User Record Deleted').
       open('users.php', '_self');
     </script>
@@ -170,7 +170,7 @@ if(isset($_GET['reset']) && !empty($_GET['reset'])){
 
   mysqli_query($conn, "update users set password='$encrypted_string', new_user='1' where user_id='".$_GET['reset']."'");
   echo "
-    <script>  
+    <script>
       alert('User Password Updated');
       open('users.php', '_self');
     </script>
@@ -181,7 +181,7 @@ if(isset($_GET['reset']) && !empty($_GET['reset'])){
   #ui-datepicker-div{z-index:9999 !important;}
   .ui-datepicker-month, .ui-datepicker-year{color: #333;}
   .dataTables_filter{display: none}
-</style>    
+</style>
 <section class="content-header">
   <h1>
     Users <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#addUserModal" title="Add User"><i class="fa fa-user-plus"> </i> Add User</button>
@@ -207,7 +207,7 @@ if(isset($_GET['reset']) && !empty($_GET['reset'])){
   </div>
 
   <div class="row">
-    <div class="col-md-12" id="showUserDiv"></div>    
+    <div class="col-md-12" id="showUserDiv"></div>
   </div>
 
   <div class="row">
@@ -375,6 +375,7 @@ if(isset($_GET['reset']) && !empty($_GET['reset'])){
               <select name="user_type" id="user_type" class="form-control" onchange="isUserType(this.value)">
                 <option value="">Select</option>
                 <option value="admin">Admin</option>
+                <option value="principal">Principal</option>
                 <option value="instructor">Instructor</option>
                 <option value="encoder">Encoder</option>
                 <option value="printer">Printer</option>
@@ -477,10 +478,10 @@ if(isset($_GET['reset']) && !empty($_GET['reset'])){
   $(function() {
     $('#datepicker').datepicker({
       onSelect: function(value, ui) {
-          var today = new Date(), 
-              dob = new Date(value), 
+          var today = new Date(),
+              dob = new Date(value),
               age = new Date(today - dob).getFullYear() - 1970;
-          
+
           //$('#age').text(age);
           document.getElementById("age").value = age;
       },
@@ -589,7 +590,7 @@ if(isset($_GET['reset']) && !empty($_GET['reset'])){
       }
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
-      alert(errorThrown); 
+      alert(errorThrown);
     }
    });
   }

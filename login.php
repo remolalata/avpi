@@ -49,6 +49,7 @@ date_default_timezone_set('Asia/Manila');
         <select name="usertype" class="form-control" required >
           <option value="">User Level</option>
           <option value="admin">Admin</option>
+          <option value="principal">Principal</option>
           <option value="instructor">Instructor</option>
           <option value="encoder">Encoder</option>
           <option value="printer">Printer</option>
@@ -116,7 +117,7 @@ date_default_timezone_set('Asia/Manila');
     var $password = $(this),
         tooltipVisible = $('.tooltip').is(':visible'),
         s = String.fromCharCode(e.which);
-    
+
     //Check if capslock is on. No easy way to test for this
     //Tests if letter is upper case and the shift key is NOT pressed.
     if ( s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey ) {
@@ -126,7 +127,7 @@ date_default_timezone_set('Asia/Manila');
       if (tooltipVisible)
         $password.tooltip('hide');
     }
-    
+
     //Hide the tooltip when moving away from the password field
     $password.blur(function(e) {
       $password.tooltip('hide');

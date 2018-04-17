@@ -53,7 +53,7 @@ function instructors(){
                 <select id="sy" class="form-control">
                   <option value="">All</option>
                   <?php
-                    for ($i=10; $i <= $school_year_start; $i++) { 
+                    for ($i=10; $i <= $school_year_start; $i++) {
                       ?>
                         <option value="<?php echo $i; ?>"><?php echo "20".$i; ?></option>
                       <?php
@@ -94,14 +94,14 @@ function instructors(){
 
         </div>
       </div>
-      
+
     </section>
   </div>
 </div>
 
 
 
-<script src="plugins/select2/select2.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script>
   $(".select2").select2();
 

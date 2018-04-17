@@ -19,8 +19,8 @@ if(empty($the_user['image_path']) or $the_user['image_path'] == "image/user_imag
 $school_year_start = '17';
 //$school_year_start = date('y');
 
-//$server_name = "/av/";
-$server_name = "/avpsms/";
+$server_name = "/avpi/trunk/";
+// $server_name = "/avpsms/";
 
 function website_title($server){
   if($server."index.php" == $_SERVER['PHP_SELF']){
@@ -39,9 +39,9 @@ function website_title($server){
   <title><?php echo website_title($server_name); ?></title>
   <link rel="icon" type="image/png" href="image/logo.png">
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <?php if($_SERVER['PHP_SELF'] == $server_name."schedule.php" || $_SERVER['PHP_SELF'] == $server_name."assign_subject.php" || $_SERVER['PHP_SELF'] == $server_name."subjects.php" || $_SERVER['PHP_SELF'] == $server_name."instructor.php"){ ?>
-  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
   <?php } ?>
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
@@ -122,7 +122,7 @@ function website_title($server){
           </a>
         </li>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."church.php"){ echo "class='active'"; } ?> >
           <a href="church.php">
             <i class="fa fa-home"></i> <span>Church</span>
@@ -138,7 +138,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."instructor.php"){ echo "class='active'"; } ?> >
           <a href="instructor.php">
             <i class="fa fa-user"></i> <span>Instructors</span>
@@ -146,7 +146,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."course-section.php"){ echo "class='active'"; } ?> >
           <a href="course-section.php">
             <i class="fa fa-file-text-o"></i> <span>Course & Section</span>
@@ -154,7 +154,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."subjects.php"){ echo "class='active'"; } ?> >
           <a href="subjects.php">
             <i class="fa fa-clipboard"></i> <span>Subjects</span>
@@ -162,7 +162,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."assign_subject.php"){ echo "class='active'"; } ?> >
           <a href="assign_subject.php">
             <i class="fa fa-user"></i> <span>Assign Subjects</span>
@@ -170,7 +170,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal" || $the_user['user_type'] == "instructor" || $the_user['user_type'] == "encoder"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."students.php"){ echo "class='active'"; } ?> >
           <a href="students.php">
             <i class="fa fa-child"></i> <span>Students</span>
@@ -178,7 +178,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin"){ ?>
+        <?php if($the_user['user_type'] == "admin" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."enrollment.php"){ echo "class='active'"; } ?> >
           <a href="enrollment.php">
             <i class="fa fa-briefcase"></i> <span>Enrollment</span>
@@ -186,7 +186,7 @@ function website_title($server){
         </li>
         <?php } ?>
 
-        <?php if($the_user['user_type'] == "admin" or $the_user['user_type'] == "encoder" or $the_user['user_type'] == "instructor"){ ?>
+        <?php if($the_user['user_type'] == "admin" or $the_user['user_type'] == "encoder" or $the_user['user_type'] == "instructor" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."grade.php"){ echo "class='active'"; } ?> >
           <a href="grade.php">
             <i class="fa fa-edit"></i> <span>Grades</span>
@@ -203,7 +203,7 @@ function website_title($server){
         <?php } ?>
 
 
-        <?php if($the_user['user_type'] == "admin" or $the_user['user_type'] == "printer"){ ?>
+        <?php if($the_user['user_type'] == "admin" or $the_user['user_type'] == "printer" || $the_user['user_type'] == "principal"){ ?>
         <li <?php if($_SERVER['PHP_SELF'] == $server_name."print.php"){ echo "class='active'"; } ?> >
           <a href="print.php">
             <i class="fa fa-print"></i> <span>Print</span>

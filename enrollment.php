@@ -6,7 +6,7 @@
 </style>
 
 <?php
-  if($the_user['user_type'] != "admin"){ header("Location: 404.php"); }
+  if($the_user['user_type'] != "admin" && $the_user['user_type'] != "principal"){ header("Location: 404.php"); }
 
   function checkIfElective($subjects){
     include'php/db_connection.php';

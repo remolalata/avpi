@@ -11,7 +11,7 @@
 
 <?php
 
-if($the_user['user_type'] != "admin"){ header("Location: 404.php"); }
+if($the_user['user_type'] != "admin" && $the_user['user_type'] != "principal"){ header("Location: 404.php"); }
 
 if(isset($_POST['addChurchHidden'])){
   if ($_FILES["file"]["size"] > 5000000) {
@@ -275,7 +275,7 @@ if(isset($_POST['editChurchHidden'])){
               </div>
             </div>
           </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

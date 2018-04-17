@@ -113,7 +113,16 @@ if(isset($_POST['addStudentHidden'])){
         $storedFile = "image/default_student.png";
       }
 
-      mysqli_query($conn, "insert into students(student_number, last_name, first_name, middle_name, suffix_name, sy, gender, birthdate, age,  contact_number, email_address, church, course, year, yearID, section, status, count, image_path) values('$student_number', '$last_name', '$first_name', '$middle_name', '$suffix_name', '$sy', '$gender', '$birthdate', '$age',  '$contact_number', '$email', '$church', '$course', '$year', '$yearID', '$section', '$status', '$count_marriage', '$storedFile') ") or die(mysqli_error($conn));
+      if($the_user['user_type'] == 'instructor' || $the_user['user_type'] == 'encoder') {
+
+        mysqli_query($conn, "insert into students(student_number, last_name, first_name, middle_name, suffix_name, sy, gender, birthdate, age,  contact_number, email_address, church, course, year, yearID, section, status, count, image_path, account_review, account_added_by) values('$student_number', '$last_name', '$first_name', '$middle_name', '$suffix_name', '$sy', '$gender', '$birthdate', '$age',  '$contact_number', '$email', '$church', '$course', '$year', '$yearID', '$section', '$status', '$count_marriage', '$storedFile', 0, '".$_SESSION['user_id']."') ") or die(mysqli_error($conn));
+
+      } else {
+
+        mysqli_query($conn, "insert into students(student_number, last_name, first_name, middle_name, suffix_name, sy, gender, birthdate, age,  contact_number, email_address, church, course, year, yearID, section, status, count, image_path) values('$student_number', '$last_name', '$first_name', '$middle_name', '$suffix_name', '$sy', '$gender', '$birthdate', '$age',  '$contact_number', '$email', '$church', '$course', '$year', '$yearID', '$section', '$status', '$count_marriage', '$storedFile') ") or die(mysqli_error($conn));
+
+      }
+
       mysqli_query($conn, "insert into logs(name, user_type, action, date, time, ip_address) values('".$the_user['first_name']." ".$the_user['last_name']."', '".$the_user['user_type']."', 'Add a student', '".date("M-d-Y")."', '".date("h:i A")."', '".$_SERVER['REMOTE_ADDR']."')") or die(mysqli_error($conn));
       echo "
         <script>
@@ -212,7 +221,9 @@ if(isset($_POST['viewStudentHidden'])){
 </style>
 <section class="content-header">
   <h1>
-    Students <a href="#" class="btn btn-primary btn-xs notooltip" data-toggle="modal" data-target="#addStudent" title="Add Student"><i class="fa fa-user-plus"> </i> <span data-toggle="tooltip" title="Add Student">Add Student</span></a>
+    Students
+    <a href="#" class="btn btn-primary btn-xs notooltip" data-toggle="modal" data-target="#addStudent" title="Add Student"><i class="fa fa-user-plus"> </i> <span data-toggle="tooltip" title="Add Student">Add Student</span></a>
+    <a href="#" class="btn btn-default btn-xs notooltip" data-toggle="modal" data-target="#showPendingStudent" title="Show Pending Student"><i class="fa fa-eye"> </i> Show Pending Student</a>
   </h1>
   <ol class="breadcrumb">
     <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -243,7 +254,7 @@ if(isset($_POST['viewStudentHidden'])){
   <div class="row" id="studentsList">
 
     <div class="col-md-12">
-      
+
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Students List</h3>
@@ -264,7 +275,7 @@ if(isset($_POST['viewStudentHidden'])){
             </thead>
             <tbody>
             <?php
-              $query6  = mysqli_query($conn, "select * from students where year<>'graduate' and account_status=1 order by last_name");
+              $query6  = mysqli_query($conn, "select * from students where year<>'graduate' and account_status=1 and account_review=1 order by last_name");
               while($row6 = mysqli_fetch_assoc($query6)){
                 $query7 = mysqli_query($conn, "select * from church where church_id='".$row6['church']."'");
                 $row7 = mysqli_fetch_assoc($query7);
@@ -284,12 +295,21 @@ if(isset($_POST['viewStudentHidden'])){
                       }
                       ?>
                     </td>
-                    <td align="center" style="width: 100px"> 
+                    <td align="center" style="width: 100px">
                       <form method="post">
                         <input type="hidden" name="deleteStudentHidden" value="<?php echo $row6['student_number']; ?>">
                         <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#viewStudentModal" data-viewid="<?php echo $row6['student_number']; ?>"><i class="fa fa-eye" data-toggle="tooltip" title="View Student"></i></a>
-                        <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#editStudentModal" data-viewid="<?php echo $row6['student_number']; ?>"><i class="fa fa-pencil" data-toggle="tooltip" title="Edit Student"></i></a>
-                        <input type="submit" class="btn btn-danger btn-xs fa submit-icon" value="&#xf1f8;" onclick="return confirm('Are sure you want to delete this student?')" data-toggle="tooltip" title="Delete Student">
+                        <?php if($the_user['user_type'] == 'encoder') { ?>
+
+                          <?php if($row6['account_added_by'] == $_SESSION['user_id']) { ?>
+                          <?php } ?>
+
+                        <?php } else { ?>
+
+                          <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#editStudentModal" data-viewid="<?php echo $row6['student_number']; ?>"><i class="fa fa-pencil" data-toggle="tooltip" title="Edit Student"></i></a>
+                          <input type="submit" class="btn btn-danger btn-xs fa submit-icon" value="&#xf1f8;" onclick="return confirm('Are sure you want to delete this student?')" data-toggle="tooltip" title="Delete Student">
+
+                        <?php } ?>
                       </form>
                     </td>
                   </tr>
@@ -304,7 +324,7 @@ if(isset($_POST['viewStudentHidden'])){
     </div>
 
   </div>
-  
+
 </section>
 
 <div class="modal" tabindex="-1" role="dialog" id="addStudent">
@@ -315,7 +335,7 @@ if(isset($_POST['viewStudentHidden'])){
         <h4 class="modal-title">Add Student</h4>
       </div>
       <div class="modal-body">
-          
+
         <?php if(!empty(workflow())){ ?>
         <div class="alert alert-danger alert-dismissible" style="margin-bottom: 60px">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -440,7 +460,7 @@ if(isset($_POST['viewStudentHidden'])){
                 <?php foreach (courses() as $key => $value) { ?>
 
                   <option value="<?php echo $value['course_id']; ?>"><?php echo $value['course_description']; ?></option>
-                  
+
                 <?php } ?>
               </select>
             </div>
@@ -466,7 +486,7 @@ if(isset($_POST['viewStudentHidden'])){
                 <?php foreach (years() as $value) { ?>
 
                   <option value="<?php echo $value['yearID']; ?>"><?php echo $value['year_description']; ?></option>
-                  
+
                 <?php } ?>
               </select>
             </div>
@@ -482,7 +502,7 @@ if(isset($_POST['viewStudentHidden'])){
                 <?php foreach (church() as $value) { ?>
 
                   <option value="<?php echo $value['church_id']; ?>"><?php echo $value['church_name']; ?></option>
-                    
+
                 <?php } ?>
               </select>
             </div>
@@ -545,6 +565,112 @@ if(isset($_POST['viewStudentHidden'])){
   </div>
 </div>
 
+<div class="modal" tabindex="-1" role="dialog" id="showPendingStudent">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Pending Students</h4>
+      </div>
+      <div class="modal-body">
+        <div style="overflow: auto">
+          <?php if($the_user['user_type'] == 'instructor' || $the_user['user_type'] == 'encoder') { ?>
+
+            <table class="table table-bordered table-hover defaultTbl">
+              <thead>
+                <tr>
+                  <th>Student Number</th>
+                  <th>Name of Student</th>
+                  <th>Year & Section</th>
+                  <th>Course</th>
+                  <th>Church</th>
+                  <th>Pastor</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <?php
+                  $query12 = mysqli_query($conn, "select * from students where account_review = 0 and account_added_by = '".$_SESSION['user_id']."' ");
+                  while($row12 = mysqli_fetch_assoc($query12)) {
+                    $query14 = mysqli_query($conn, "select * from church where church_id='".$row12['church']."'");
+                    $row14 = mysqli_fetch_assoc($query14);
+                  ?>
+
+                    <tr>
+                      <td><?php echo $row12['student_number']; ?></td>
+                      <td><?php echo $row12['last_name'].", ".$row12['first_name']." ".$row12['middle_name']." ".$row12['suffix_name']; ?></td>
+                      <td><?php echo $row12['section']." - ".$row12['year']; ?></td>
+                      <td><?php echo $row12['course']; ?></td>
+                      <td><span style="display: none"><?php echo $row14['church_acronym']; ?></span><?php echo $row14['church_name']; ?></td>
+                      <td><?php echo $row14['pastor']; ?></td>
+                      <td align="center" style="width: 100px">
+                        <?php if($row12['account_review'] == 0) { ?>
+                          <span class="label label-default">Pending</span>
+                        <?php } else if($row12['account_review'] == 1) { ?>
+                          <span class="label label-success">Approved</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">Declined</span>
+                        <?php } ?>
+                      </td>
+                    </tr>
+
+                  <?php }
+                ?>
+
+              </tbody>
+            </table>
+
+          <?php } else { ?>
+
+            <table class="table table-bordered table-hover" id="pendingStudents">
+              <thead>
+                <tr>
+                  <th>Student Number</th>
+                  <th>Name of Student</th>
+                  <th>Year & Section</th>
+                  <th>Course</th>
+                  <th>Church</th>
+                  <th>Pastor</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <?php
+                  $query11 = mysqli_query($conn, "select * from students where account_review = 0");
+                  while($row11 = mysqli_fetch_assoc($query11)) {
+                    $query13 = mysqli_query($conn, "select * from church where church_id='".$row11['church']."'");
+                    $row13 = mysqli_fetch_assoc($query13);
+                  ?>
+
+                    <tr>
+                      <td><?php echo $row11['student_number']; ?></td>
+                      <td><?php echo $row11['last_name'].", ".$row11['first_name']." ".$row11['middle_name']." ".$row11['suffix_name']; ?></td>
+                      <td><?php echo $row11['section']." - ".$row11['year']; ?></td>
+                      <td><?php echo $row11['course']; ?></td>
+                      <td><span style="display: none"><?php echo $row13['church_acronym']; ?></span><?php echo $row13['church_name']; ?></td>
+                      <td><?php echo $row13['pastor']; ?></td>
+                      <td align="center" style="width: 100px">
+                        <a href="#" class="btn btn-success btn-xs" data-toggle="tooltip" title="Approve Student"><i class="fa fa-check"> </i> </a>
+                        <a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Decline Student"><i class="fa fa-times"> </i> </a>
+                      </td>
+                    </tr>
+
+                  <?php }
+                ?>
+
+              </tbody>
+            </table>
+
+          <?php } ?>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="plugins/jquery-ui-1.12.0.custom/jquery-ui.min.js"></script>
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -567,10 +693,10 @@ function setCount(val){
   $(function() {
     $('#datepicker').datepicker({
       onSelect: function(value, ui) {
-          var today = new Date(), 
-              dob = new Date(value), 
+          var today = new Date(),
+              dob = new Date(value),
               age = new Date(today - dob).getFullYear() - 1970;
-          
+
           //$('#age').text(age);
           document.getElementById("age").value = age;
       },
@@ -594,7 +720,14 @@ var table = $('#studentTbl').DataTable({
   "order": [[1, "asc"]]
 });
 
-$("defaultTbl").DataTable();
+$("#pendingStudents").DataTable({
+  "paging": false,
+  "lengthChange": false,
+  "searching": true,
+  "ordering": true,
+  "info": false,
+  "order": [[1, "asc"]],
+});
 
 $('#searchQuery').on( 'keyup', function () {
   table.search( this.value ).draw();
@@ -693,7 +826,7 @@ function submitForm(){
       }
     },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
-        alert(errorThrown); 
+        alert(errorThrown);
       }
   });
 }

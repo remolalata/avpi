@@ -1,0 +1,2 @@
+<!-- 4/16/2018 -->
+ALTER TABLE `students`  ADD `account_review` INT NOT NULL COMMENT '0 = pending, 1 = approved, 2 = declined'  AFTER `account_status`,  ADD `account_added_by` VARCHAR(255) NOT NULL  AFTER `account_review`;

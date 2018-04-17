@@ -1,6 +1,6 @@
 <?php include'php/header.php'; ?>
 
-<?php if($the_user['user_type'] != "admin" && $the_user['user_type'] != "encoder" && $the_user['user_type'] != "instructor"){ header('location: index.php'); } ?>
+<?php if($the_user['user_type'] != "admin" && $the_user['user_type'] != "encoder" && $the_user['user_type'] != "instructor" && $the_user['user_type'] != "principal"){ header('location: index.php'); } ?>
 
 <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css">

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
 <?php
 
-if($the_user['user_type'] != "admin"){ header("Location: 404.php"); }
+if($the_user['user_type'] != "admin" && $the_user['user_type'] != "principal"){ header("Location: 404.php"); }
 
 if(isset($_POST['assignInstructorHidden'])){
   $name_instructor = $_POST['name_instructor'];
@@ -25,7 +25,7 @@ if(isset($_POST['assignInstructorHidden'])){
   //     $t1 = strtotime($a[4]);
   //     $t2 = strtotime($b[4]);
   //     return $t1 - $t2;
-  // }    
+  // }
   // usort($instructor_subjects, 'date_compare');
 
   // $ifConflict = 0;
@@ -58,7 +58,7 @@ if(isset($_POST['assignInstructorHidden'])){
   //   echo "
   //     <script>
   //       alert('$alert_text');
-  //       open('assign_subject.php', '_self');     
+  //       open('assign_subject.php', '_self');
   //     </script>
   //   ";
   // }else{
@@ -77,7 +77,7 @@ if(isset($_POST['assignInstructorHidden'])){
   echo "
     <script>
       alert('$alert_text');
-      open('assign_subject.php', '_self');     
+      open('assign_subject.php', '_self');
     </script>
   ";
 }
@@ -97,7 +97,7 @@ if(isset($_POST['assignEncoderHidden'])){
   echo "
     <script>
       alert('$alert_text');
-      open('assign_subject.php', '_self');     
+      open('assign_subject.php', '_self');
     </script>
   ";
 }
@@ -112,7 +112,7 @@ if(isset($_POST['instructorSubjectHidden'])){
 
   echo "
     <script>
-      open('assign_subject.php', '_self');     
+      open('assign_subject.php', '_self');
     </script>
   ";
 }
@@ -127,7 +127,7 @@ if(isset($_POST['encoderSubjectHidden'])){
 
   echo "
     <script>
-      open('assign_subject.php', '_self');     
+      open('assign_subject.php', '_self');
     </script>
   ";
 }
@@ -398,7 +398,7 @@ if(isset($_POST['encoderSubjectHidden'])){
   $(".select2").select2();
 
   $("#clear").click(function(){
-    $(".select2").val(null).trigger("change"); 
+    $(".select2").val(null).trigger("change");
   });
 
   $('#instructorTable').DataTable({

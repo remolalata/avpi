@@ -1,5 +1,5 @@
 <?php include'php/header.php'; ?>
-    
+
 <section class="content-header">
   <h1>
     404 Error Page
@@ -39,5 +39,5 @@
   </div>
   <!-- /.error-page -->
 </section>
-    
+
 <?php include'php/footer.php'; ?>
