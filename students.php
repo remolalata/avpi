@@ -211,6 +211,28 @@ if(isset($_POST['viewStudentHidden'])){
     </script>
   ";
 }
+
+if(isset($_GET['approve']) && !empty($_GET['approve'])) {
+  $student_number = $_GET['approve'];
+  mysqli_query($conn, "update students set account_review = 1 where student_number = '".$student_number."' ") or die(mysqli_error($conn));
+  echo "
+    <script>
+      alert('Student Approved.');
+      open('students.php', '_self');
+    </script>
+  ";
+}
+
+if(isset($_GET['disapprove']) && !empty($_GET['disapprove'])) {
+  $student_number = $_GET['disapprove'];
+  mysqli_query($conn, "update students set account_review = 2 where student_number = '".$student_number."' ") or die(mysqli_error($conn));
+  echo "
+    <script>
+      alert('Student Disapproved.');
+      open('students.php', '_self');
+    </script>
+  ";
+}
 ?>
 
 <style>
@@ -591,7 +613,7 @@ if(isset($_POST['viewStudentHidden'])){
               <tbody>
 
                 <?php
-                  $query12 = mysqli_query($conn, "select * from students where account_review = 0 and account_added_by = '".$_SESSION['user_id']."' ");
+                  $query12 = mysqli_query($conn, "select * from students where account_added_by = '".$_SESSION['user_id']."' ");
                   while($row12 = mysqli_fetch_assoc($query12)) {
                     $query14 = mysqli_query($conn, "select * from church where church_id='".$row12['church']."'");
                     $row14 = mysqli_fetch_assoc($query14);
@@ -652,8 +674,8 @@ if(isset($_POST['viewStudentHidden'])){
                       <td><span style="display: none"><?php echo $row13['church_acronym']; ?></span><?php echo $row13['church_name']; ?></td>
                       <td><?php echo $row13['pastor']; ?></td>
                       <td align="center" style="width: 100px">
-                        <a href="#" class="btn btn-success btn-xs" data-toggle="tooltip" title="Approve Student"><i class="fa fa-check"> </i> </a>
-                        <a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Decline Student"><i class="fa fa-times"> </i> </a>
+                        <a href="<?php echo $_SERVER['PHP_SELF']; ?>?approve=<?php echo $row11['student_number']; ?>" class="label label-success">Approve</a>
+                        <a href="<?php echo $_SERVER['PHP_SELF']; ?>?disapprove=<?php echo $row11['student_number']; ?>" class="label label-danger">Disapprove</a>
                       </td>
                     </tr>
 

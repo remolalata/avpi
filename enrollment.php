@@ -121,7 +121,7 @@
               </thead>
               <tbody>
                 <?php
-                  $query = mysqli_query($conn, "select * from students where yearID='2' and student_status='Pre-Registered' and account_status='1'");
+                  $query = mysqli_query($conn, "select * from students where yearID='2' and student_status='Pre-Registered' and account_status='1' and account_review = 1 ");
                   while($row = mysqli_fetch_assoc($query)){
                     $church = mysqli_fetch_assoc(mysqli_query($conn, "select * from church where church_id='".$row['church']."'"));
                     ?>
@@ -159,7 +159,7 @@
               </thead>
               <tbody>
                 <?php
-                  $query2 = mysqli_query($conn, "select * from students where yearID='3' and student_status='Pre-Registered' and account_status='1'");
+                  $query2 = mysqli_query($conn, "select * from students where yearID='3' and student_status='Pre-Registered' and account_status='1' and account_review = 1 ");
                   while($row2 = mysqli_fetch_assoc($query2)){
                     $church2 = mysqli_fetch_assoc(mysqli_query($conn, "select * from church where church_id='".$row2['church']."'"));
                     ?>
@@ -196,7 +196,7 @@
               </thead>
               <tbody>
                 <?php
-                  $query3 = mysqli_query($conn, "select * from students where yearID='4' and student_status='Pre-Registered' and account_status='1'");
+                  $query3 = mysqli_query($conn, "select * from students where yearID='4' and student_status='Pre-Registered' and account_status='1' and account_review = 1 ");
                   while($row3 = mysqli_fetch_assoc($query3)){
                     $church3 = mysqli_fetch_assoc(mysqli_query($conn, "select * from church where church_id='".$row3['church']."'"));
                     ?>
@@ -234,7 +234,7 @@
               </thead>
               <tbody>
                 <?php
-                  $query4 = mysqli_query($conn, "select * from students where yearID='5' and student_status='Pre-Registered' and account_status='1'");
+                  $query4 = mysqli_query($conn, "select * from students where yearID='5' and student_status='Pre-Registered' and account_status='1' and account_review = 1 ");
                   while($row4 = mysqli_fetch_assoc($query4)){
                     $church4 = mysqli_fetch_assoc(mysqli_query($conn, "select * from church where church_id='".$row4['church']."'"));
                     ?>
@@ -324,7 +324,7 @@
                   }
                   $like_titus_2 = rtrim($like_titus, 'or ');
 
-                  $query2 = mysqli_query($conn, "select * from students where ($like_titus_2) and student_status='Pre-Registered' and account_status='1'");
+                  $query2 = mysqli_query($conn, "select * from students where ($like_titus_2) and student_status='Pre-Registered' and account_status='1' and account_review = 1 ");
                   while($row2 = mysqli_fetch_assoc($query2)){
                     $church2 = mysqli_fetch_assoc(mysqli_query($conn, "select * from church where church_id='".$row2['church']."'"));
                     ?>
@@ -362,7 +362,7 @@
               </thead>
               <tbody>
                 <?php
-                  $query7 = mysqli_query($conn, "select * from students where student_status='Pre-Registered' and account_status='1'");
+                  $query7 = mysqli_query($conn, "select * from students where student_status='Pre-Registered' and account_status='1' and account_review = 1 ");
                   while($row7 = mysqli_fetch_assoc($query7)){
                     $church7 = mysqli_fetch_assoc(mysqli_query($conn, "select * from church where church_id='".$row7['church']."'"));
                     ?>
