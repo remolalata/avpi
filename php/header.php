@@ -16,8 +16,8 @@ if(empty($the_user['image_path']) or $the_user['image_path'] == "image/user_imag
 }
 
 //for testing purposes
-$school_year_start = '17';
-//$school_year_start = date('y');
+// $school_year_start = '17';
+$school_year_start = date('y');
 
 $server_name = "/avpi/trunk/";
 // $server_name = "/avpsms/";
